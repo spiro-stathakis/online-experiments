@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<!-- MODULE: PROPERTIES -->
+	<bean id="moduleProperties" class="org.springframework.beans.factory.config.MapFactoryBean">
+		<property name="sourceMap">
+			<map>
+				<entry key="module.name" value="Rachels Experiment" />
+				<entry key="module.version" value="1.0" />
+				<entry key="module.author" value="Tatool" />
+				<entry key="module.description" value="GoNoGo training with snack food SCIAT" />
+				<entry key="module.execution.display.classname" value="ch.tatool.core.display.swing.SwingExecutionDisplayProvider" />
+				<entry key="module.execution.initializer.classname" value="ch.tatool.core.module.initializer.SpringExecutorInitializer" />
+				<entry key="module.execution.display.regionsContainer" value="true" />
+				<entry key="module.scheduler.classname" value="ch.tatool.core.module.scheduler.AlwaysAllowModuleScheduler" />
+				<entry key="module.scheduler.maxSessions" value="1" />
+				<entry key="module.info.classname" value="ch.tatool.app.gui.ModuleInfoPanel" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- MODULE: EXPORTERS -->
+	<bean id="moduleExporters" class="org.springframework.beans.factory.config.MapFactoryBean">
+		<property name="sourceMap">
+			<map>
+				<entry key="localExporter">
+					<bean class="ch.tatool.app.export.FileDataExporter">
+						<property name="incrementalExport" value="false" />
+						<property name="autoExport" value="false" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- +++++++++++++++++++++++++++++++++++++++ -->
+	<!-- GENERAL SETTINGS -->
+	<!-- +++++++++++++++++++++++++++++++++++++++ -->
+
+
+	<!-- KEY HANDLER -->
+	<bean id="keyHandler" class="ch.tatool.core.element.handler.EscapeKeyEventHandler">
+		<!-- allow to exit module by pressing ESCAPE -->
+		<property name="allowEscapeKey" value="true" />
+	</bean>
+	
+	
+
+<!-- ADDED BY RA TO TRY AND GET BLOCKS 6.8.13 -->
+
+<!-- +++++++++++++++++++++++++++++++++++++++ -->
+	<!-- ITERATOR SETTINGS -->
+	<!-- +++++++++++++++++++++++++++++++++++++++ -->
+
+	<!-- TASK ITERATORS -->
+	
+	<!-- Go/ NoGo Training Phase -->
+	
+	<bean id="iter_GoNoGo_tutorial" class="ch.tatool.core.element.IteratedListSelector">
+	<!-- number of iterations -->
+	<property name="numIterations" value="3" />
+	</bean>
+	
+	<bean id="iter_GoNoGo_practice" class="ch.tatool.core.element.IteratedListSelector">
+	<property name="numIterations" value="12" />
+	</bean>
+
+	<bean id="iter_GoNoGo_block1" class="ch.tatool.core.element.IteratedListSelector">
+		<property name="numIterations" value="36" />
+	</bean>
+
+	<bean id="iter_GoNoGo_block2" class="ch.tatool.core.element.IteratedListSelector">
+		<property name="numIterations" value="36" />
+	</bean>
+  
+	<bean id="iter_GoNoGo_block3" class="ch.tatool.core.element.IteratedListSelector">		
+		<property name="numIterations" value="36" />
+	</bean>
+
+	<bean id="iter_GoNoGo_block4" class="ch.tatool.core.element.IteratedListSelector">	
+		<property name="numIterations" value="36" />
+	</bean>
+	
+	<bean id="iter_GoNoGo_block5" class="ch.tatool.core.element.IteratedListSelector">	
+		<property name="numIterations" value="36" />
+	</bean>
+	
+	<bean id="iter_GoNoGo_block6" class="ch.tatool.core.element.IteratedListSelector">	
+		<property name="numIterations" value="36" />
+	</bean>
+	
+	<bean id="iter_GoNoGo_block7" class="ch.tatool.core.element.IteratedListSelector">	
+		<property name="numIterations" value="36" />
+	</bean>
+	
+	<bean id="iter_GoNoGo_block8" class="ch.tatool.core.element.IteratedListSelector">	
+		<property name="numIterations" value="36" />
+	</bean>
+	
+	
+	<!-- IAT Study Phase -->
+	
+	
+		<bean id="iter_IAT_practice1" class="ch.tatool.core.element.IteratedListSelector">
+	<!-- number of iterations -->
+	<property name="numIterations" value="24" />
+	</bean>
+	
+	<bean id="iter_IAT_block1" class="ch.tatool.core.element.IteratedListSelector">
+	<!-- number of iterations -->
+	<property name="numIterations" value="72" />
+	</bean>
+	
+		<bean id="iter_IAT_block2" class="ch.tatool.core.element.IteratedListSelector">
+	<!-- number of iterations -->
+	<property name="numIterations" value="72" />
+	</bean>
+	
+	<bean id="iter_IAT_practice2" class="ch.tatool.core.element.IteratedListSelector">
+	<!-- number of iterations -->
+	<property name="numIterations" value="24" />
+	</bean>
+	
+	<bean id="iter_IAT_block3" class="ch.tatool.core.element.IteratedListSelector">
+	<!-- number of iterations -->
+	<property name="numIterations" value="72" />
+	</bean>
+	
+	<bean id="iter_IAT_block4" class="ch.tatool.core.element.IteratedListSelector">
+	<!-- number of iterations -->
+	<property name="numIterations" value="72" />
+	</bean>
+	
+	
+	<!-- ADDED BY RA TO TRY AND GET BLOCKS 6.8.13 -->
+	
+	<!-- +++++++++++++++++++++++++++++++++++++++ -->
+	<!-- TASK SETTINGS -->
+	<!-- +++++++++++++++++++++++++++++++++++++++ -->
+	
+		<!-- Executable (introduce here then refer to as 'children' in hierarchy)-->
+		<bean id="exec" class="ch.tatool.core.element.ExecutableElement">
+			<property name="handlers">
+				<list>
+					<bean class="ch.tatool.core.element.handler.TrialCountHandler" />
+					<bean class="ch.tatool.core.element.handler.DefaultTrialCountEvaluator" />
+					<bean id="timer" class="ch.tatool.core.element.handler.timeout.DefaultVisualTimeoutHandler">
+						<property name="defaultTimerDuration" value="2000" />
+					</bean>										
+				</list>
+			</property>
+			
+			<!--  commented out RA - maybe this bit goes in module hierarchy - yes it does!
+			<property name="executable">
+				<bean id="demoTask" class="com.myuniversity.executable.MyExecutableRachel" />
+			</property>
+			-->
+		</bean>
+	
+
+
+	<!-- +++++++++++++++++++++++++++++++++++++++ -->
+	<!-- MODULE HIERARCHY -->
+	<!-- +++++++++++++++++++++++++++++++++++++++ -->
+	<bean id="moduleHierarchy" class="ch.tatool.core.element.ListElement">
+
+		<property name="handlers">
+			<list>
+				
+				<bean id="mainIterator" class="ch.tatool.core.element.IteratedListSelector" />					
+				<bean class="com.myuniversity.executable.ui.SessionPropertyHandler"/>
+				<bean class="com.myuniversity.executable.ui.IATSessionPropertyHandler"/>
+				<bean class="ch.tatool.core.element.handler.ExecutionFeedbackHandler" />
+				
+				<bean class="ch.tatool.core.element.handler.StatusPanelStateHandler">
+					<property name="resetIds">
+						<list>
+							<util:constant static-field="ch.tatool.core.display.swing.status.StatusPanel.STATUS_PANEL_OUTCOME" />
+						</list>
+					</property>
+					<property name="enableIds">
+						<list>
+							<util:constant static-field="ch.tatool.core.display.swing.status.StatusPanel.STATUS_PANEL_OUTCOME" />
+							<util:constant static-field="ch.tatool.core.display.swing.status.StatusPanel.STATUS_PANEL_TRIAL" />
+						</list>
+					</property>
+					<property name="phase">
+						<util:constant static-field="ch.tatool.exec.ExecutionPhase.PRE_PROCESS" />
+					</property>
+				</bean>
+				
+				<ref bean="keyHandler" />
+			</list>
+		</property>
+
+		<property name="children">
+			<list>
+						
+			
+		<!-- /////////////////////////////////////////////////////////////////////////////////// -->					
+				
+										<!--  GO/ NO-GO STUDY PHASE -->								
+				
+		<!-- /////////////////////////////////////////////////////////////////////////////////// -->	
+
+	
+	<!-- Consent -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>Consent.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+	<!-- Study design -->
+					<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>Rachel_Study.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+
+				
+	<!-- Instructions -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.GoNoGo_Instructions">
+				      </bean>
+				   </property>
+				</bean>				
+
+				
+	<!-- Inform subject of different phases -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_BlockInfo.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+
+				
+				<!-- /////////////// -->			
+				<!-- Tutorial phase -->
+				<bean id="GoNoGotutorial" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_tutorial" />							
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+								<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo_Tutorial" class="com.myuniversity.executable.GoNoGoTutorial" />
+								</property>
+								</bean>
+								
+						</list>
+					</property>
+				</bean>
+				
+				<!-- /////////////// -->				
+				
+				<!-- End of tutorial: then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_tutorialBlock_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+				<!-- /////////////// -->
+				
+				<!-- Practice phase -->
+				<bean id="GoNoGopractice" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_practice" />							
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+								<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo_Practice" class="com.myuniversity.executable.GoNoGoPractice" />
+								</property>
+								</bean>
+								
+						</list>
+					</property>
+				</bean>
+				
+				<!-- /////////////// -->				
+							
+				<!-- End of practice: then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_practiceBlock_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+								
+				<!-- /////////////// -->
+				
+				<!-- test block 1 -->
+				<bean id="training_block1" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_block1" />							
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+								<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo1" class="com.myuniversity.executable.GoNoGo" />
+								</property>
+								</bean>
+						</list>
+					</property>
+				</bean>
+								
+
+				<!-- PAUSE -->
+				<!-- count-down first -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.CountdownExecutable">
+				         <property name="id" value="countdown" />
+				         <property name="countdownFrom" value="10" />
+				         <property name="countdownInterval" value="1000" />
+				      </bean>
+				   </property>
+				</bean>			
+							
+				<!-- then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+			
+				
+				<!-- test block 2 -->
+				<bean id="training_block2" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_block2" />
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+						
+						<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo2" class="com.myuniversity.executable.GoNoGo" />
+								</property>
+								</bean>
+
+						</list>
+					</property>
+				</bean>
+				
+				<!-- PAUSE -->
+				<!-- count-down first -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.CountdownExecutable">
+				         <property name="id" value="countdown" />
+				         <property name="countdownFrom" value="10" />
+				         <property name="countdownInterval" value="1000" />
+				      </bean>
+				   </property>
+				</bean>			
+							
+				<!-- then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+			
+				
+				<!-- test block 3 -->
+				<bean id="training_block3" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_block3" />
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+						
+						<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo3" class="com.myuniversity.executable.GoNoGo" />
+								</property>
+								</bean>
+
+						</list>
+					</property>
+				</bean>
+				
+				<!-- PAUSE -->
+				<!-- count-down first -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.CountdownExecutable">
+				         <property name="id" value="countdown" />
+				         <property name="countdownFrom" value="10" />
+				         <property name="countdownInterval" value="1000" />
+				      </bean>
+				   </property>
+				</bean>			
+							
+				<!-- then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+				<!-- test block 4 -->
+				<bean id="training_block4" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_block4" />
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+						
+						<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo4" class="com.myuniversity.executable.GoNoGo" />
+								</property>
+								</bean>
+
+						</list>
+					</property>
+				</bean>
+				
+				<!-- PAUSE -->
+				<!-- count-down first -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.CountdownExecutable">
+				         <property name="id" value="countdown" />
+				         <property name="countdownFrom" value="10" />
+				         <property name="countdownInterval" value="1000" />
+				      </bean>
+				   </property>
+				</bean>			
+							
+				<!-- then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+				<!-- test block 5 -->
+				<bean id="training_block5" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_block5" />
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+						
+						<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo5" class="com.myuniversity.executable.GoNoGo" />
+								</property>
+								</bean>
+
+						</list>
+					</property>
+				</bean>
+				
+				<!-- PAUSE -->
+				<!-- count-down first -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.CountdownExecutable">
+				         <property name="id" value="countdown" />
+				         <property name="countdownFrom" value="10" />
+				         <property name="countdownInterval" value="1000" />
+				      </bean>
+				   </property>
+				</bean>			
+							
+				<!-- then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+				<!-- test block 6 -->
+				<bean id="training_block6" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_block6" />
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+						
+						<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo6" class="com.myuniversity.executable.GoNoGo" />
+								</property>
+								</bean>
+
+						</list>
+					</property>
+				</bean>
+				
+				<!-- PAUSE -->
+				<!-- count-down first -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.CountdownExecutable">
+				         <property name="id" value="countdown" />
+				         <property name="countdownFrom" value="10" />
+				         <property name="countdownInterval" value="1000" />
+				      </bean>
+				   </property>
+				</bean>			
+							
+				<!-- then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+				<!-- test block 7 -->
+				<bean id="training_block7" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_block7" />
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+						
+						<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo7" class="com.myuniversity.executable.GoNoGo" />
+								</property>
+								</bean>
+
+						</list>
+					</property>
+				</bean>
+				
+				<!-- PAUSE -->
+				<!-- count-down first -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.CountdownExecutable">
+				         <property name="id" value="countdown" />
+				         <property name="countdownFrom" value="10" />
+				         <property name="countdownInterval" value="1000" />
+				      </bean>
+				   </property>
+				</bean>			
+							
+				<!-- then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+				<!-- test block 8 -->
+				<bean id="training_block8" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_GoNoGo_block8" />
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+						
+						<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="GoNoGo8" class="com.myuniversity.executable.GoNoGo" />
+								</property>
+								</bean>
+
+						</list>
+					</property>
+				</bean>
+				
+				<!-- PAUSE -->
+				<!-- count-down first -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.CountdownExecutable">
+				         <property name="id" value="countdown" />
+				         <property name="countdownFrom" value="10" />
+				         <property name="countdownInterval" value="1000" />
+				      </bean>
+				   </property>
+				</bean>	
+				
+				<!-- END -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>GoNoGo_endOfModule.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+				
+				
+				
+		<!-- /////////////////////////////////////////////////////////////////////////////////// -->					
+				
+										<!--  IAT STUDY PHASE -->								
+				
+		<!-- /////////////////////////////////////////////////////////////////////////////////// -->	
+				
+				
+
+				
+				<!-- Instructions -->
+				
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean id="instructionRachel" class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>IAT_instruction.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+	<!-- PRACTICE 1 -->			
+				
+				<!-- Instructions 	-->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.IATpractice1Instructions">
+				      </bean>
+				   </property>
+				</bean>
+				
+				
+				<!-- Practice1 phase -->
+				<bean id="IAT_practice1" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_IAT_practice1" />							
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+								<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="IAT_Practice1" class="com.myuniversity.executable.UnipolarIAT_practice1" />
+								</property>
+								</bean>
+								
+						</list>
+					</property>
+				</bean>
+						
+							
+				<!-- End of block: then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>IAT_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				
+ <!-- BLOCK 1 -->				
+				
+				
+				<!-- Instructions 	-->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.IATblock1Instructions">
+				      </bean>
+				   </property>
+				</bean>
+				
+				
+				<!-- Block 1 task -->
+				<bean id="IAT_Block1" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_IAT_block1" />							
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+								<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="IAT_block1" class="com.myuniversity.executable.UnipolarIAT_block1" />
+								</property>
+								</bean>
+								
+						</list>
+					</property>
+				</bean>
+				
+				
+				<!-- End of block: then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>IAT_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+
+<!-- BLOCK 2 -->				
+				
+				
+				<!-- Instructions 	-->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.IATblock2Instructions">
+				      </bean>
+				   </property>
+				</bean>
+				
+				
+				<!-- Block 2 task -->
+				<bean id="IAT_Block2" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_IAT_block2" />							
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+								<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="IAT_block2" class="com.myuniversity.executable.UnipolarIAT_block2" />
+								</property>
+								</bean>
+								
+						</list>
+					</property>
+				</bean>
+				
+				
+				<!-- End of block: then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>IAT_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+
+<!-- PRACTICE 2 -->	
+							
+				<!-- Instructions 	-->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.IATpractice2Instructions">
+				      </bean>
+				   </property>
+				</bean>
+				
+				<!-- Practice 2 phase -->
+				<bean id="IAT_Practice2" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_IAT_practice2" />							
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+								<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="IAT_practice2" class="com.myuniversity.executable.UnipolarIAT_practice2" />
+								</property>
+								</bean>
+								
+						</list>
+					</property>
+				</bean>
+				
+				
+				<!-- End of block: then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>IAT_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+
+<!-- BLOCK 3 -->				
+				
+				<!-- Instructions 	-->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.IATblock3Instructions">
+				      </bean>
+				   </property>
+				</bean>
+				
+				<!-- Block 3 task -->
+				<bean id="IAT_Block3" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_IAT_block3" />							
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+								<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="IAT_block3" class="com.myuniversity.executable.UnipolarIAT_block3" />
+								</property>
+								</bean>
+								
+						</list>
+					</property>
+				</bean>
+				
+				
+				<!-- End of block: then key press to start -->			
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>IAT_block_pause.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+	
+<!-- BLOCK 4 -->			
+				
+				<!-- Instructions 	-->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+				   <property name="id" value="exec" />
+				   <property name="executable">
+				      <bean class="com.myuniversity.executable.ui.IATblock4Instructions">
+				      </bean>
+				   </property>
+				</bean>
+				
+				
+				<!-- Block 4 task -->
+				<bean id="IAT_Block4" class="ch.tatool.core.element.ListElement">
+					<property name="handlers">
+						<list>
+							<ref bean="iter_IAT_block4" />							
+						</list>
+					</property>
+
+					<property name="children">
+						<list>
+								<bean class="ch.tatool.core.element.ExecutableElement">
+								<property name="executable">
+								<bean id="IAT_block4" class="com.myuniversity.executable.UnipolarIAT_block4" />
+								</property>
+								</bean>
+								
+						</list>
+					</property>
+				</bean>
+				
+				
+				<!-- /////////////////////////////// -->
+						<!-- END OF STUDY -->
+				<!-- /////////////////////////////// -->
+
+				
+				<!-- END -->
+				<bean class="ch.tatool.core.element.ExecutableElement">
+					<property name="executable">
+						<bean class="ch.tatool.core.executable.HTMLExecutable">
+							<property name="base" value="/com/myuniversity/instructions/" />
+							<property name="pages">
+								<list>
+									<value>endOfModule.htm</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+
+			</list>
+		</property>
+
+	</bean>
+
+</beans>

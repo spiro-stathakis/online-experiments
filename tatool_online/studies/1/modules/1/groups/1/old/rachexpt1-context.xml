@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<!-- 
+
+	Defines module creators and the default creator registry
+	
+	Note that the registry can be redefined in your extension context file
+	if the default creators should not be available in your application.
+
+-->
+<beans>
+	
+	<!-- 
+		Default creators registration
+	 -->
+	<bean id="ExampleCreatorsRegistration" parent="DefaultModuleCreatorRegistryHelper">
+        <property name="creators">
+            <list>
+                <ref bean="ExampleDataServerModuleCreator" />
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Demo Training Creator -->
+    <bean id="ExampleDataServerModuleCreator" class="ch.tatool.core.module.creator.DataServerModuleCreator">
+    	<property name="serverUrl" value="http://131.251.200.24/tatoolphp/data" />
+    </bean>
+
+</beans>

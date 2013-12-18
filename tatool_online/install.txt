@@ -1,0 +1,119 @@
+--------------------------------
+Tatool Online 1.3.2
+--------------------------------
+--------------------------------
+Installation Instructions
+--------------------------------
+
+1. Setup the mysql table schema which can be found in the file mysql-schema.sql.
+1.a Add an admin user to the table TAT_USER so you are able login at a later stage. Change the value for
+USER_PASS accordingly.
+
+INSERT INTO `TAT_USER` (`USER_ID`, `USER_NAME`, `USER_PASS`, `USER_MAIL`) 
+VALUES (1, 'admin', 'admin', 'me@example.com');
+
+2. Edit the file setting.php which can be found in the data folder:
+2.a Provide all necessary information about your mysql database (host, user, password, database).
+2.b Set the studiespath variable to the path where Tatool Online should keep the downloads/uploads for your studies. 
+This folder should not be accessible via the web browser.
+
+3. Create the folder you defined in 2.b on your webserver. You will need to set write permissions to allow uploads.
+
+4. Prepare another folder where you will serve the Tatool Online PHP files to your users.
+This folder should be accessible via the web browser.
+
+5. Upload the folders 'data', 'script', 'stats' and the style.css and button.css files to the folder you created in step 4.
+(The files in the 'data' folder will be used by the Tatool Java Client in order to upload data and download module files.)
+(The files in the 'stats' folder are used to manage your studies online with the help of a web browser.)
+
+That's it, the basic installation for Tatool Online is done. In order to actually serve modules you will have to 
+follow the following instructions to setup your studies accordingly.
+
+
+--------------------------------
+Start Serving a Module via Tatool Online
+--------------------------------
+
+With version 1.3 of Tatool Online there is still some manual setup to be done before you can actually start using Tatool
+Online.
+
+1. Manually create a new Study, Module and Group(s) by adding records to the following tables in your MySQL database:
+
+-- Create new study
+INSERT INTO `TAT_STUDY` (`STUDY_ID`, `STUDY_NAME`) 
+VALUES (1, 'Example Study');
+
+-- Create new private module
+INSERT INTO `TAT_MODULE` (`MODULE_ID`, `STUDY_ID`, `MODULE_NR`, `MODULE_NAME`, `MODULE_TYPE_CD`, `LIMIT_DOWN_NUM`, `LIMIT_SESS_NUM`, `NOTICE_UP_FREE_HR_NUM`, `NOTICE_SCHED_VALUE_NUM`, `SCHEDULER`)
+VALUES (1, 1, 1, 'Example Module', 1, 0, 0, 0, 0, '');
+
+-- Associate the module with the study
+INSERT INTO `TAT_MODULE_STUDY` (`MODULE_STUDY_ID`, `MODULE_ID`, `STUDY_ID`) 
+VALUES (1, 1, 1);
+
+-- Create new group
+INSERT INTO `TAT_GROUP` (`GROUP_ID`, `STUDY_ID`, `GROUP_NR`, `GROUP_NAME`, `GROUP_TYPE_CD`) 
+VALUES (1, 1, 1, 'Test Group 1', 1);
+
+-- Associate group with module
+INSERT INTO `TAT_GROUP_MODULE` (`GROUP_MODULE_ID`, `GROUP_ID`, `MODULE_ID`, `XML_FILE`, `JNLP_FILE`) 
+VALUES (1, 1, 1, 'module_xyz.xml', '');
+
+2. Setup the uploadpath folder which you created in step 3 of the installation instructions by adding the following folder structure.
+The names in curly brackets have to be replaced with the values in your database. Your module xml file has to be placed inside the 
+specific group folder next to the upload folder. This way you can serve different module files to different groups within the same module.
+
+/"studiespath" (as defined in step 2.b of the installation instructions)
+-/studies
+--/{TAT_STUDY.STUDY_ID} (ex. 1)
+---/modules
+----/{TAT_MODULE.MODULE_NR} (ex. 1)
+-----/groups
+------/{TAT_GROUP.GROUP_NR} (ex. 1)
+-------/upload (write permissions)
+-------/module_xyz.xml (the module you want to serve via Tatool Online)
+
+3. Now in order for the Tatool Online admin users to access the newly created study, you will have to add a record to TAT_USER_STUDY. The following insert
+statement will allow your USER_ID 1 which you should have created in step 1.a of the installation instructions access to your new study. This user can now access the 
+study and manage it.
+
+INSERT INTO `TAT_USER_STUDY` (`USER_STUDY_ID`, `USER_ID`, `STUDY_ID`, `BLIND_CD`) 
+VALUES (1, 1, 1, 0);
+
+4. You can now open the website index.php of your tatool online installation with your web browser and login. You should see the newly added study
+in the study overview. By clicking on manage you can start adding subjects to a study, which in turn allows them to download your module and
+upload their data.
+
+
+--------------------------------
+Prepare your Tatool Java Client Code to use Tatool Online
+--------------------------------
+
+In order for your Tatool code to work with Tatool Online your will have to configure the DataServerModuleCreator for your own
+Tatool Online installation. This can be done by adding an extension context XML file to your classpath at the location "/src/main/resources/tatool/extension/*-context.xml". 
+This file will be loaded automatically by Tatool when logging in and will offer the new option "Tatool Online Module" in the "My Modules" dialog box dropdown.
+
+So this could be for example a file called "myexperiment-context.xml" which has to contain the following xml code. You will only have to change
+the value for the property serverUrl to point to your webserver "data" directory which you uploaded when installing Tatool Online.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!-- Default Creators Registration -->
+	<bean id="MyCreatorsRegistration" parent="DefaultModuleCreatorRegistryHelper">
+		<property name="creators">
+			<list>
+				<ref bean="MyDataServerModuleCreator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- My DataServerModuleCreator -->
+	<bean id="MyDataServerModuleCreator" class="ch.tatool.core.module.creator.DataServerModuleCreator">
+		<property name="serverUrl" value="http://www.yourwebserver.com/data" />
+	</bean>
+</beans>
+
+You can compile and package your Tatool code either as an executable JAR file or as a Webstart application. The Webstart application has to be uploaded 
+to your webserver. The download and installation of Tatool can then be started by accessing the launch.jnlp file. If Java webstart does not automatically start
+the download you will most probably have to add a custom MIME type (application/x-java-jnlp-file) to your webserver to handle the JNLP extension correctly.

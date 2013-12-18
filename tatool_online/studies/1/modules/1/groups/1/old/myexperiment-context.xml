@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!-- Default Creators Registration -->
+	<bean id="MyCreatorsRegistration" parent="DefaultModuleCreatorRegistryHelper">
+		<property name="creators">
+			<list>
+				<ref bean="MyDataServerModuleCreator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- My DataServerModuleCreator -->
+	<bean id="MyDataServerModuleCreator" class="ch.tatool.core.module.creator.DataServerModuleCreator">
+		<property name="serverUrl" value="http://131.251.200.24/tatoolphp/data" />
+	</bean>
+</beans>
