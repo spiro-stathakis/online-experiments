@@ -1,0 +1,6 @@
+28/01/2014 - Added a new group to the module 1 that belongs to study 1
+Here are  the DML statements: 
+ insert into tat_group (STUDY_ID,GROUP_NR,GROUP_NAME,GROUP_TYPE_CD) VALUES (1,2,'Test group 2', 1);
+ insert into tat_group_module (GROUP_ID,MODULE_ID,XML_FILE) VALUES (2,1,'Rachel_ExptDP.xml'); 
+
+
